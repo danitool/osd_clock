@@ -1,3 +1,4 @@
+0.6	2017 update
 0.5	Fixed mem leak.  Thank you Andrew Rice.
 
 0.4	Fixed broken shadow support when interval is supplied.

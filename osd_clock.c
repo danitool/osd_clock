@@ -1,7 +1,9 @@
 /*
  * osd_clock
  *
- * Copyright (C) 2001, Jon Beckham <leftorium@leftorium.net>
+ * Copyright (C) 2001, Jon Beckham <leftorium@<leftorium@leftorium.net>
+ *                     Martijn van de Streek <martijn@foodfight.org>
+ *               2017, Daniel González Cabanelas <dgcbueu@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +38,9 @@ static struct option long_options[] = {
   {"shadow",   1, NULL, 's'},
   {"top",      0, NULL, 't'},
   {"bottom",   0, NULL, 'b'},
-  {"offset",   1, NULL, 'o'},
+  {"right",    0, NULL, 'r'},
+  {"xoffset",  1, NULL, 'x'},
+  {"yoffset",  1, NULL, 'y'},
   {"help",     0, NULL, 'h'},
   {NULL,       0, NULL, 0}
 };
@@ -44,21 +48,23 @@ static struct option long_options[] = {
 int main (int argc, char *argv[])
 {
   char c;
-  
+
   static const char *format;
   time_t *t = NULL;
 
   xosd *osd;
   xosd_pos pos = XOSD_bottom;
-
-  char *font = "fixed";
-  char *color = "red";
-  int delay = 3; 
-  int offset = 0;
+  xosd_align align = XOSD_left;
+  
+  const char *font = "-*-freemono-*-r-*-*-*-300-*-*-*-*-*-*";
+  const char *color = "red";
+  int delay = -1; 
+  int xoffset = 0;
+  int yoffset = 0;
   int shadow = 2;
   int interval = 1;
 
-  while ((c = getopt_long(argc ,argv,"f:c:d:F:i:s:o:tbh",
+  while ((c = getopt_long(argc ,argv,"f:c:d:F:i:s:x:y:tbrh",
 			  long_options, NULL)) != -1)
   {
     switch(c)
@@ -81,8 +87,11 @@ int main (int argc, char *argv[])
       case 's':
 	shadow = atoi(optarg);
 	break;
-      case 'o':
-	offset = atoi(optarg);
+      case 'x':
+	xoffset = atoi(optarg);
+	break;
+      case 'y':
+	yoffset = atoi(optarg);
 	break;
       case 't':
 	pos = XOSD_top;
@@ -90,17 +99,22 @@ int main (int argc, char *argv[])
       case 'b':
 	pos = XOSD_bottom;
 	break;
+      case 'r':
+	align = XOSD_right;
+	break;
       case 'h':
 	printf("USAGE: %s [-flag args]\n"
 		"\t-f\tfully qualified font.  default: fixed\n"
 		"\t-c\tcolor.  default: red\n"
 		"\t-s\tdrop shadow offset.  default: 2\n"
-		"\t-t\tlocate clock at top left (default: bottom left)\n"
-		"\t-b\tlocate clock at bottom left (default)\n"
-		"\t-o\toffset value to raise or lower around panels.  def: 0\n"
+		"\t-t\tlocate clock at top (default: bottom)\n"
+		"\t-b\tlocate clock at bottom (default)\n"
+		"\t-r\tlocate clock at right (default: left)\n"
+		"\t-x\thorizontal offset (default: 0)\n"
+		"\t-y\tvertical offset (default: 0)\n"
 		"\t-F\tSpecify time/date format (in strftime(3) style)\n"
 		"\t-d\tDelay (time the clock stays on screen when it's updated)\n"
-	        "\t\tin seconds\n"
+	        "\t\tin seconds (default: -1 (never))\n"
 		"\t-i\tInterval (time between updates) in seconds\n"
 		"\t-h\tthis help message\n",
 		argv[0]);
@@ -108,8 +122,25 @@ int main (int argc, char *argv[])
 	break;
     }
   }
+
+  osd = xosd_create(1);
+
+  /* Set the position of the display. */
+  xosd_set_pos(osd, pos);
+  xosd_set_align(osd, align);
+  xosd_set_vertical_offset(osd,yoffset);
+  xosd_set_horizontal_offset(osd,xoffset);
+ 
+  /* Set timeout */
+  xosd_set_timeout(osd, delay);
   
-  osd = xosd_init (font, color, delay, pos, offset, shadow, 2);
+  /* Set the font and the colours. */
+  xosd_set_font(osd, font);
+  xosd_set_colour(osd, color);
+
+  /* Set the font shadow */
+  xosd_set_shadow_offset(osd, shadow);
+  
   if (!osd)
   {
     fprintf (stderr, "Error initializing osd\n");
@@ -117,7 +148,7 @@ int main (int argc, char *argv[])
   }
 
   /* If no format is specified, we revert to ctime-ish display */ 
-  if(!format) format = "%a %b %e %H:%M:%S %G";
+  if(!format) format = "%H:%M:%S";
 
   while (1)
   {
@@ -126,7 +157,7 @@ int main (int argc, char *argv[])
    
     strftime(output, 255, format, localtime(&curr_time));
 
-    xosd_display (osd, 1, XOSD_string, output);
+    xosd_display (osd, 0, XOSD_string, output);
     sleep(interval);
   }
 

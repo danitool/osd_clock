@@ -18,7 +18,7 @@ LDFLAGS=-L. -L/usr/X11R6/lib -lX11 -lXext -lpthread -lXt
 
 XOSDLIBS=-lxosd
 
-SOURCES=NEWS AUTHORS ChangeLog README COPYING Makefile \
+SOURCES=ChangeLog README COPYING Makefile \
 	osd_clock.c osd_clock.1
 
 ARFLAGS=cru

@@ -1,0 +1,12 @@
+I wanted a clock, and I didn't want anything else.  So libxosd it was.  
+
+This is an initial release, 0.1.  E-mail me with bugs.
+
+For help, osd_clock -h.  Simple enough.
+
+to compile, type 'make'.
+
+to install, type 'make install'.
+
+enjoy!
+jon beckham <leftorium@leftorium.net>

@@ -1,0 +1,15 @@
+0.5	Fixed mem leak.  Thank you Andrew Rice.
+
+0.4	Fixed broken shadow support when interval is supplied.
+	Fixed interval ignorance.
+
+0.3	Added man page.
+	Added offset option.
+	Readded format.  ;-)  
+
+0.2	Added "format", "interval" and "delay" command line options
+	Fixed ctime newline-termination.  Thanks Lars Kellogg-Stedman.
+
+0.1	Made clock from the 0.7.0 release of xosd... modified the osd_cat 
+	testing program.  Will split code at 1.0.  This is buggy and 
+	prealpha.  Use at your own risk.

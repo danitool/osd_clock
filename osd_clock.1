@@ -1,0 +1,46 @@
+.\" Emacs, -*- nroff -*- please
+.TH OSDClock 1osd_clock "March 2001" "X OSD Clock"
+.SH NAME
+osd_clock - X on-screen clock displayer
+.SH SYNOPSIS
+.B osd_cat
+[\fIOPTION\fR]... [\fI+FORMAT\fR]
+.SH DESCRIPTION
+.PP
+.\" Add any additional description here
+.PP
+Display date/time information on screen.
+.TP
+\fB\-f\fR \fIFONT\fR
+Set font.
+.TP
+\fB\-c\fR \fICOLOR\fR
+Set color.
+.TP
+\fB\-d\fR \fIDELAY\fR
+Sets the delay (in seconds) that the clock is exposed.  Useful if combined with \fIINTERVAL\fR.
+.TP
+\fB\-F\fR \fIFORMAT\fR
+This option specifies the format to be used to output the date.  See '\fIstrftime(3)\fR'.
+.TP
+\fB\-i\fR \fIINTERVAL\fR
+This specifies the interval between displays.  Default is 1 (display every second).
+.TP
+\fB\-s\fR \fISHADOW\fR
+This option sets the shadow depth.  Default 2.
+.TP
+\fB\-o\fR \fIOFFSET\fR
+This option specifies the offset from the top or bottom of screen the text is displayed. The default is \fI0\fR.  Useful to move above or below panels or epplets.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+display this help and exit
+.PP
+.SH AUTHOR
+Jon Beckham <leftorium@leftorium.net>
+.br
+Martijn van de Streek <martijn@foodfight.org>
+.br
+Nathan Walp <faceprint@faceprint.com>
+.br
+.SH COPYRIGHT
+It is distributed under the GNU General Public License.

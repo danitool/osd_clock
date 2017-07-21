@@ -1,0 +1,5 @@
+ osd_clock was written by:
+  
+ Jon Beckham <leftorium@leftorium.net>
+ Martijn van de Streek <martijn@foodfight.org> (format, delay and interval
+ 					       command-line options)

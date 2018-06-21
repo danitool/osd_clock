@@ -39,6 +39,7 @@ static struct option long_options[] = {
   {"top",      0, NULL, 't'},
   {"bottom",   0, NULL, 'b'},
   {"right",    0, NULL, 'r'},
+  {"center",   0, NULL, 'C'},
   {"xoffset",  1, NULL, 'x'},
   {"yoffset",  1, NULL, 'y'},
   {"help",     0, NULL, 'h'},
@@ -64,7 +65,7 @@ int main (int argc, char *argv[])
   int shadow = 2;
   int interval = 1;
 
-  while ((c = getopt_long(argc ,argv,"f:c:d:F:i:s:x:y:tbrh",
+  while ((c = getopt_long(argc ,argv,"f:c:d:F:i:s:x:y:tbrCh",
 			  long_options, NULL)) != -1)
   {
     switch(c)
@@ -102,21 +103,25 @@ int main (int argc, char *argv[])
       case 'r':
 	align = XOSD_right;
 	break;
+      case 'C':
+        align = XOSD_center;
+        break;
       case 'h':
 	printf("USAGE: %s [-flag args]\n"
-		"\t-f\tfully qualified font.  default: fixed\n"
-		"\t-c\tcolor.  default: red\n"
-		"\t-s\tdrop shadow offset.  default: 2\n"
-		"\t-t\tlocate clock at top (default: bottom)\n"
-		"\t-b\tlocate clock at bottom (default)\n"
-		"\t-r\tlocate clock at right (default: left)\n"
-		"\t-x\thorizontal offset (default: 0)\n"
-		"\t-y\tvertical offset (default: 0)\n"
-		"\t-F\tSpecify time/date format (in strftime(3) style)\n"
-		"\t-d\tDelay (time the clock stays on screen when it's updated)\n"
-	        "\t\tin seconds (default: -1 (never))\n"
-		"\t-i\tInterval (time between updates) in seconds\n"
-		"\t-h\tthis help message\n",
+		"\t-f --font    \tfully qualified font. Use 'xfontsel'. default: fixed\n"
+		"\t-c --color   \tcolor. Name or hex e.g. '#B03060'. See X11 rgb.txt. default: red\n"
+		"\t-s --shadow  \tdrop shadow offset.  default: 2\n"
+		"\t-t --top     \tlocate clock at top (default: bottom)\n"
+		"\t-b --bottom  \tlocate clock at bottom (default)\n"
+		"\t-r --right   \tlocate clock at right (default: left)\n"
+		"\t-C --center  \tlocate clock at center (default: left)\n"
+		"\t-x --xoffset \thorizontal offset (default: 0)\n"
+		"\t-y --yoffset \tvertical offset (default: 0)\n"
+		"\t-F --format  \tSpecify time/date format (in strftime(3) style)\n"
+		"\t-d --delay   \tDelay (time the clock stays on screen when it's updated)\n"
+	        "\t             \tin seconds (default: -1 (never))\n"
+		"\t-i --interval\tInterval (time between updates) in seconds\n"
+		"\t-h --help    \tthis help message\n",
 		argv[0]);
 	return EXIT_SUCCESS;
 	break;

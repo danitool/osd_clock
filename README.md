@@ -10,9 +10,9 @@ The default font is freemono. To correctly choose the desired font, it's recomen
 application **xfontsel**:
 1. Execute the command: `xfontsel -print`
 2. Choose an available font
-3. Press the *quit* button, you'll get the name of the font at the terminal console. Don't forget  
-quoting the name of the font if it has spaces.
-4. Include the name of this font when executing osd_clock
+3. Press the *quit* button, you'll get the name of the font at the terminal console.
+4. Include the name of this font when executing osd_clock. Don't forget quoting the name of the  
+font if it has spaces.
 
 ---
 To compile, type 'make'.  
